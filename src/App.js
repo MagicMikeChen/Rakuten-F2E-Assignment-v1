@@ -1,6 +1,6 @@
 import React, { Fragment, useState } from "react";
 import "./App.css";
-import ItemApp from "./components/additems";
+import ItemApp from "./components/ItemApp";
 import Alert from "./components/alert";
 
 function App() {

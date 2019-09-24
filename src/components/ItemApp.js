@@ -11,82 +11,55 @@ const ItemApp = props => {
 
   const addItem = e => {
     e.preventDefault();
+
     const emailRule = /^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z]+$/;
-    //validate ok or not
+
     if (email.search(emailRule) != -1) {
-      console.log("true");
-    } else {
-      props.handleAlert({ type: "danger", text: "Please enter valied email" });
-    }
-    if (phone.match(/-?[0-9][0-9,\-]+$/)) {
-      //phone validation
-      if (edit) {
-        let tempItems = items.map(item => {
-          return item.id === id ? { ...item, name, phone, email } : item;
-        });
-        setItems(tempItems);
-        setEdit(false);
-        props.handleAlert({ type: "success", text: "successful edited" });
-        setName(""); //clear each input after submit
-        setPhone("");
-        setEmail("");
-      } else if (
-        items.every(
-          person =>
-            person.name.toLowerCase().trim() !== name.toLowerCase().trim()
-        )
-      ) {
-        const singleitem = { id: uuid(), name, phone, email };
-        setItems([...items, singleitem]);
-        props.handleAlert({ type: "success", text: "successful added" });
-        setName(""); //clear each input after submit
-        setPhone("");
-        setEmail("");
+      //email validation
+      if (phone.match(/-?[0-9][0-9,\-]+$/)) {
+        //phone validation
+        if (edit) {
+          let tempItems = items.map(item => {
+            return item.id === id ? { ...item, name, phone, email } : item;
+          });
+          setItems(tempItems);
+          setEdit(false);
+          props.handleAlert({ type: "success", text: "successful edited" });
+          setName(""); //clear each input after submit
+          setPhone("");
+          setEmail("");
+        } else if (
+          //name validation
+          items.every(
+            person =>
+              person.name.toLowerCase().trim() !== name.toLowerCase().trim()
+          )
+        ) {
+          const singleitem = { id: uuid(), name, phone, email };
+          setItems([...items, singleitem]);
+          props.handleAlert({ type: "success", text: "successful added" });
+          setName(""); //clear each input after submit
+          setPhone("");
+          setEmail("");
+        } else {
+          //handle name error alert
+          props.handleAlert({
+            type: "danger",
+            text: "Name already exist"
+          });
+        }
       } else {
+        //handle number error alert
         props.handleAlert({
           type: "danger",
-          text: "Name already exist"
+          text: "Phone number must be numbers and +/-"
         });
       }
     } else {
-      //handle error alert
-      props.handleAlert({
-        type: "danger",
-        text: "Phone number must be numbers and +/-"
-      });
+      //handle email error alert
+      props.handleAlert({ type: "danger", text: "Please enter valied email" });
     }
-
-    // if (
-    //   items.every(
-    //     person => person.name.toLowerCase().trim() !== name.toLowerCase().trim()
-    //   )
-    // ) {
-    //   const singleitem = { id: uuid(), name, phone, email };
-    //   setItems([...items, singleitem]);
-    //   props.handleAlert({ type: "success", text: "successful added" });
-    //   setName(""); //clear each input after submit
-    //   setPhone("");
-    //   setEmail("");
-    // } else if (name == "") {
-    //   props.handleAlert({ type: "danger", text: "Must type a name" });
-    // } else {
-    //   //handle error alert
-    //   props.handleAlert({ type: "danger", text: "Name already exist" });
-    // }
   };
-  // const handleAlert = ({ type, text }) => {
-  //   setAlert({ show: true, type, text });
-  //   setTimeout(() => {
-  //     setAlert({ show: false });
-  //   }, 5000);
-  // };
-
-  // const onPhoneChange = e => {
-  //   let phone = e.target.value;
-  //   if (phone.match(/-?[0-9][0-9,\-]+$/)) {
-  //     setPhone(phone);
-  //   }
-  // };
 
   const editItem = id => {
     let editing = items.find(item => item.id === id);
@@ -102,7 +75,7 @@ const ItemApp = props => {
     setItems(items.filter(item => item.id !== id));
     props.handleAlert({ type: "danger", text: "Item deleted" });
   };
-
+  //Get data from localstorage
   useEffect(() => {
     const itemsData = JSON.parse(localStorage.getItem("items"));
 
@@ -110,7 +83,7 @@ const ItemApp = props => {
       setItems(itemsData);
     }
   }, []);
-
+  //Set data to localstorage
   useEffect(() => {
     localStorage.setItem("items", JSON.stringify(items));
   }, [items]);
@@ -122,6 +95,7 @@ const ItemApp = props => {
         <div className="form-group">
           <input
             type="text"
+            name="name"
             placeholder="* Name"
             value={name}
             onChange={e => setName(e.target.value)}
@@ -131,6 +105,7 @@ const ItemApp = props => {
         <div className="form-group">
           <input
             type="text"
+            name="phone"
             placeholder="Phone Numeber"
             value={phone}
             onChange={e => setPhone(e.target.value)}
@@ -139,6 +114,7 @@ const ItemApp = props => {
         <div className="form-group">
           <input
             type="text"
+            name="email"
             placeholder="Email"
             value={email}
             onChange={e => setEmail(e.target.value)}
