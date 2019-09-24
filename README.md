@@ -1,4 +1,15 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Download and run
+
+### `yarn install`
+
+and then run
+
+### `yarn start`
+
+This app can add new contact with name, phone and email with validations.
+Each function has an alert to show the status.
+
+
 
 ## Available Scripts
 
