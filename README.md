@@ -1,3 +1,6 @@
+This app can add new contact with name, phone and email with validations.<br>
+Each function has an alert to show the status.<br>
+
 Download and run
 
 ### `yarn install`
@@ -6,8 +9,10 @@ and then run
 
 ### `yarn start`
 
-This app can add new contact with name, phone and email with validations.
-Each function has an alert to show the status.
+Runs the app in the development mode.<br>
+Open [http://localhost:3000](http://localhost:3000) to view it in the browser.<br>
+
+
 
 
 
