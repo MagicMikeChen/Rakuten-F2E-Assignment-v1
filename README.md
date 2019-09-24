@@ -1,3 +1,4 @@
+## Rakuten F2E Assignment by Mike Chen
 This app can add new contact with name, phone and email with validations.<br>
 Each function has an alert to show the status.<br>
 
@@ -11,7 +12,11 @@ and then run
 
 Runs the app in the development mode.<br>
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.<br>
-
+<br>
+<br>
+<br>
+<br>
+<br>
 
 
 
