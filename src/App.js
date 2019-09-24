@@ -1,25 +1,27 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Fragment, useState } from "react";
+import "./App.css";
+import ItemApp from "./components/additems";
+import Alert from "./components/alert";
 
 function App() {
+  const [alert, setAlert] = useState({ show: false });
+  const handleAlert = ({ type, text }) => {
+    setAlert({ show: true, type, text });
+    setTimeout(() => {
+      setAlert({ show: false });
+    }, 5000);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Fragment>
+      <div className="container">
+        <h1>Rakuten F2E Assignment by Mike Chen</h1>
+        <div className="space">
+          {alert.show && <Alert type={alert.type} text={alert.text} />}
+        </div>
+        <ItemApp handleAlert={handleAlert} />
+      </div>
+    </Fragment>
   );
 }
 
